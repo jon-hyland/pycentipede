@@ -1,6 +1,6 @@
 import math
 from typing import Set, Optional
-from service.enums import DictionarySource
+from splitter.enums import DictionarySource
 
 
 def get_word_value(term: str = "", frequency: float = 1E-8, multiplier: float = 1.0, sources: Optional[Set] = None) -> float:

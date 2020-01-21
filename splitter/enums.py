@@ -1,14 +1,4 @@
 from enum import Enum
-from enum import IntEnum
-
-
-class VerbosityLevel(IntEnum):
-    """Represents three verbosity levels that can be requested."""
-    def __str__(self):
-        return str(self.name)
-    Low = 0
-    Medium = 1
-    High = 2
 
 
 class DictionarySource(Enum):
@@ -39,10 +29,3 @@ class WordType(Enum):
     Conjunction = 7
     Interjunction = 8
     AdjectiveSatellite = 9
-
-
-class ServiceStateType(Enum):
-    """Represents the state a service can be in."""
-    Up = 0
-    LoadingData = 1
-    Down = 2

@@ -1,8 +1,8 @@
 from typing import Optional, List
-from service.extensions import substring
-from service.scoring import get_word_value
-from service.split import Split
-from service.term import Term
+from utils.extensions import substring
+from splitter.scoring import get_word_value
+from splitter.split import Split
+from splitter.term import Term
 
 
 class Pass:

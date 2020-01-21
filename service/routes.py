@@ -1,19 +1,15 @@
 from flask import render_template, request, Response
+from utils import error_handler
+from utils.extensions import remove
+from utils.service_state import ServiceState
+from utils.service_stats import ServiceStats
+from utils.stopwatch import Stopwatch
+from splitter.word_splitter import Splitter
+from service.command_writer import VerbosityLevel
+from service import command_writer
 from service import config
 from service import app
-from service import word_splitter
-from service import command_writer
-from service import error_handler
-from service.enums import VerbosityLevel
-from service.extensions import remove
-from service.service_state import ServiceState
-from service.service_stats import ServiceStats
-from service.stopwatch import Stopwatch
 from service import di
-
-
-__service_state: ServiceState = di.service_state
-__service_stats: ServiceStats = di.service_stats
 
 
 @app.route("/")
@@ -29,7 +25,7 @@ def index():
         error_handler.log_error(ex)
         return str(ex)
     finally:
-        __service_stats.log_command(name="index", elapsed_ms=sw.elapsed_ms)
+        di.service_stats.log_command(name="index", elapsed_ms=sw.elapsed_ms)
 
 
 @app.route("/ping")
@@ -37,12 +33,12 @@ def ping() -> Response:
     """Returns the plain text "Up", "LoadingData", or "Down" depending on service state."""
     sw = Stopwatch()
     try:
-        response = __service_state.state.name
+        response = di.service_state.state.name
     except Exception as ex:
         error_handler.log_error(ex)
         response = str(ex)
     finally:
-        __service_stats.log_command(name="ping", elapsed_ms=sw.elapsed_ms)
+        di.service_stats.log_command(name="ping", elapsed_ms=sw.elapsed_ms)
     return Response(response=response, mimetype="text/plain")
 
 
@@ -58,7 +54,7 @@ def get_stats() -> Response:
         error_handler.log_error(ex)
         response = command_writer.error(errors, "getstats")
     finally:
-        __service_stats.log_command(name="getstats", elapsed_ms=sw.elapsed_ms)
+        di.service_stats.log_command(name="getstats", elapsed_ms=sw.elapsed_ms)
     return Response(response, mimetype="application/json")
 
 
@@ -98,9 +94,9 @@ def word_split() -> Response:
         results = []
         for i in inputs:
             if (verbosity < VerbosityLevel.High) and (not exhaustive):
-                result = word_splitter.simple_split(i, cache, max_terms, max_passes, errors)
+                result = di.word_splitter.simple_split(i, cache, max_terms, max_passes, errors)
             else:
-                result = word_splitter.full_split(i, cache, pass_display, max_terms, max_passes, errors)
+                result = di.word_splitter.full_split(i, cache, pass_display, max_terms, max_passes, errors)
             results.append(result)
         
         # write response
@@ -117,6 +113,6 @@ def word_split() -> Response:
         response = command_writer.error(errors, "wordsplit")
 
     finally:
-        __service_stats.log_command(name="wordsplit", elapsed_ms=sw.elapsed_ms)
+        di.service_stats.log_command(name="wordsplit", elapsed_ms=sw.elapsed_ms)
 
     return Response(response, mimetype="application/json" if output == "json" else "text/plain")

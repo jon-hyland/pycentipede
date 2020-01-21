@@ -1,10 +1,19 @@
 from typing import List
-from service import error_handler
-from service.json_writer import JsonWriter
-from service.enums import VerbosityLevel
+from enum import IntEnum
+from utils import error_handler
+from utils.json_writer import JsonWriter
 from service import config
-from service.word_splitter import SplitResult
+from splitter.split_result import SplitResult
 from service import di
+
+
+class VerbosityLevel(IntEnum):
+    """Represents three verbosity levels that can be requested."""
+    def __str__(self):
+        return str(self.name)
+    Low = 0
+    Medium = 1
+    High = 2
 
 
 def error(errors: List[Exception], command: str = "unknown") -> str:

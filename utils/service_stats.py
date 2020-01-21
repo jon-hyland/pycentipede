@@ -4,8 +4,8 @@ from uuid import UUID, uuid1
 from typing import Optional, List, Dict, Tuple
 from threading import Lock, Thread, Event
 from datetime import datetime, timedelta
-from service import error_handler
-from service.json_writer import JsonWriter
+from utils import error_handler
+from utils.json_writer import JsonWriter
 
 
 class ServiceStats:

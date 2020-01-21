@@ -1,6 +1,6 @@
 from typing import List, Set
-from service.scoring import get_word_value
-from service.enums import DictionarySource
+from splitter.scoring import get_word_value
+from splitter.enums import DictionarySource
 
 
 class Term:

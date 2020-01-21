@@ -1,18 +1,19 @@
 from typing import Optional, Dict
 from threading import Lock
-from service.simple_timer import SimpleTimer
-from service.split_result import SplitResult
-from service.stopwatch import Stopwatch
-from service.json_writer import JsonWriter
-from service import di
+from utils.simple_timer import SimpleTimer
+from utils.stopwatch import Stopwatch
+from utils.json_writer import JsonWriter
+from utils.service_stats import ServiceStats
+from splitter.split_result import SplitResult
 
 
 class SplitCache:
     """Stores split results in memory for quick access, periodically purging entries with fewest hits."""
 
-    def __init__(self, max_cache_items: int, cleanup_secs: float = 60.0) -> None:
+    def __init__(self, max_cache_items: int, cleanup_secs: float = 60.0, service_stats: Optional[ServiceStats] = None) -> None:
         """Class constructor."""        
         self.__max_cache_items: int = max_cache_items
+        self.__service_stats: Optional[ServiceStats] = service_stats
         self.__lock: Lock = Lock()
         self.__cache: Dict[str, SplitCache.CacheItem] = {}
         self.__sets: int = 0
@@ -50,7 +51,8 @@ class SplitCache:
         """Fired by timer, removes cached items with lowest hit counts."""
         with self.__lock:
             if len(self.__cache) > self.__max_cache_items:
-                task_id = di.service_stats.begin_task(name="", total_iterations=int(len(self.__cache) - self.__max_cache_items * 0.9))
+                if (self.__service_stats):
+                    task_id = self.__service_stats.begin_task(name="", total_iterations=int(len(self.__cache) - self.__max_cache_items * 0.9))
                 try:
                     values = list(self.__cache.values())
                     values.sort(key=lambda x: x.hits, reverse=False)
@@ -59,7 +61,8 @@ class SplitCache:
                         if input_ in self.__cache:
                             self.__cache.pop(input_)                    
                 finally:
-                    di.service_stats.end_task(task_id)
+                    if (self.__service_stats):
+                        self.__service_stats.end_task(task_id)
     
     def write_runtime_statistics(self, writer: JsonWriter) -> None:
         with self.__lock:

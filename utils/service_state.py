@@ -1,6 +1,13 @@
+from enum import Enum
 from threading import Lock
-from service.enums import ServiceStateType
-from service.json_writer import JsonWriter
+from utils.json_writer import JsonWriter
+
+
+class ServiceStateType(Enum):
+    """Represents the state a service can be in."""
+    Up = 0
+    LoadingData = 1
+    Down = 2
 
 
 class ServiceState:

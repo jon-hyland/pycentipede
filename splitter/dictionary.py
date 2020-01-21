@@ -1,18 +1,19 @@
 from typing import List, Dict, Optional, Tuple
 from threading import Event
-from service.pyahocorasick import Trie
-from service.term import Term
-from service.enums import DictionarySource
-from service.extensions import has_numbers
-from service.stopwatch import Stopwatch
-from service import di
+from utils.extensions import has_numbers
+from utils.stopwatch import Stopwatch
+from utils.service_stats import ServiceStats
+from splitter.pyahocorasick import Trie
+from splitter.term import Term
+from splitter.enums import DictionarySource
 
 
 class Dictionary:
     """Loads and stores the terms dictionary, supplying the word splitter with data."""
 
-    def __init__(self) -> None:
+    def __init__(self, service_stats: Optional[ServiceStats] = None) -> None:
         """Class constructor."""
+        self.__service_stats: Optional[ServiceStats] = service_stats
         self.__terms: List[Term] = []
         self.__terms_by_compressed: Dict[str, List[Term]] = {}
         self.__special_numbers: List[Term] = []
@@ -47,10 +48,10 @@ class Dictionary:
         # set signal
         self.__signal.set()
 
-    @staticmethod
-    def __estimate_dictionary_size(filename: str) -> int:
+    def __estimate_dictionary_size(self, filename: str) -> int:
         """Counts number of lines in file.. binary optimized."""
-        task_id = di.service_stats.begin_task("estimate_dictionary_size")
+        if (self.__service_stats):
+            task_id =self.__service_stats.begin_task("estimate_dictionary_size")
         try:
             def blocks(files, size=65536):
                 while True:
@@ -61,20 +62,22 @@ class Dictionary:
                 count = sum(bl.count("\n") for bl in blocks(f))
             return count
         finally:
-            di.service_stats.end_task(task_id)
+            if (self.__service_stats):
+                self.__service_stats.end_task(task_id)
 
-    @staticmethod
-    def __load_terms(filename: str, line_count: int) -> Dict[str, Term]:
+    def __load_terms(self, filename: str, line_count: int) -> Dict[str, Term]:
         """Loads dictionary terms from prebuilt text file."""
-        task_id = di.service_stats.begin_task("load_dictionary_terms", line_count)
+        if (self.__service_stats):
+            task_id = self.__service_stats.begin_task("load_dictionary_terms", line_count)
         try:
             terms_by_full: Dict[str, Term] = {}
             count = 0
             with open(filename, "rt") as f:
                 for line in f:
-                    count += 1
-                    if (count % 1000) == 0:
-                        di.service_stats.update_task(task_id, count, True)                
+                    if (self.__service_stats):
+                        count += 1                    
+                        if (count % 1000) == 0:
+                            self.__service_stats.update_task(task_id, count, True)                
                     if line.startswith("#"):
                         continue
                     split = line.rstrip("\r\n").split("\t")
@@ -91,21 +94,23 @@ class Dictionary:
                         terms_by_full[text] = t
             return terms_by_full
         finally:
-            di.service_stats.end_task(task_id)
+            if (self.__service_stats):
+                self.__service_stats.end_task(task_id)
 
-    @staticmethod
-    def __create_collections(terms_by_full: Dict[str, Term]) -> Tuple[Dict[str, List[Term]], List[Term], List[Term]]:
+    def __create_collections(self, terms_by_full: Dict[str, Term]) -> Tuple[Dict[str, List[Term]], List[Term], List[Term]]:
         """Creates the necessary collections."""
-        task_id = di.service_stats.begin_task("create_dictionary_collections", len(terms_by_full))
+        if (self.__service_stats):
+            task_id = self.__service_stats.begin_task("create_dictionary_collections", len(terms_by_full))
         try:
             terms_by_compressed: Dict[str, List[Term]] = {}
             terms: List[Term] = []
             special_numbers: List[Term] = []
             count = 0
             for term in terms_by_full.values():
-                count += 1
-                if (count % 1000) == 0:
-                    di.service_stats.update_task(task_id, count, True)
+                if (self.__service_stats):
+                    count += 1
+                    if (count % 1000) == 0:
+                        self.__service_stats.update_task(task_id, count, True)
                 if term.compressed not in terms_by_compressed.keys():
                     terms_by_compressed[term.compressed]: List[Term] = []
                 terms_by_compressed[term.compressed].append(term)
@@ -114,24 +119,27 @@ class Dictionary:
                     special_numbers.append(term)
             return terms_by_compressed, terms, special_numbers
         finally:
-            di.service_stats.end_task(task_id)
+            if (self.__service_stats):
+                self.__service_stats.end_task(task_id)
 
-    @staticmethod
-    def __build_index(terms: List[Term]) -> Trie:
+    def __build_index(self, terms: List[Term]) -> Trie:
         """Builds search index."""
-        task_id = di.service_stats.begin_task("create_dictionary_collections", len(terms) * 2)
+        if (self.__service_stats):
+            task_id = self.__service_stats.begin_task("create_dictionary_collections", len(terms) * 2)
         try:
             word_search = Trie()
             count = 0
             for term in terms:
-                count += 1
-                if (count % 1000) == 0:
-                    di.service_stats.update_task(task_id, count, True)
+                if (self.__service_stats):
+                    count += 1
+                    if (count % 1000) == 0:
+                        self.__service_stats.update_task(task_id, count, True)
                 word_search.add_word(term.compressed, term.compressed)
             word_search.make_automaton()
             return word_search
         finally:
-            di.service_stats.end_task(task_id)
+            if (self.__service_stats):
+                self.__service_stats.end_task(task_id)
 
     def get_terms(self) -> List[Term]:
         """Returns a pointer to the latest term list."""

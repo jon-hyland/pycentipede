@@ -2,11 +2,9 @@ import re
 import random
 from typing import List
 from time import sleep
-from service import config
-from service import di
 from service import word_splitter
-from service.split_result import SplitResult
-from service.split_cache import SplitCache
+from splitter.split_result import SplitResult
+from splitter.split_cache import SplitCache
 
 
 __words: List[List[str]] = []

@@ -1,7 +1,7 @@
 from typing import Set, Optional
-from service.scoring import get_word_value
-from service.enums import DictionarySource
-from service.term import Term
+from splitter.scoring import get_word_value
+from splitter.enums import DictionarySource
+from splitter.term import Term
 
 
 class Split:
