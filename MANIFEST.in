@@ -1,0 +1,9 @@
+include centipede.py
+include dictionary.txt
+include config.yml
+include .flaskenv
+include requirements.txt
+include tests/random_text_1.txt
+include tests/random_text_2.txt
+graft service/templates
+global-exclude *.pyc

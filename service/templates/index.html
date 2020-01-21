@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>Centipede - A Python word splitter</title>
+    </head>
+    <body>
+        <h1>Welcome to Centipede, a Python-based word splitting service.</h1>
+        <h3>Centipede splits strings of contiguous characters into separate words. It was originally used for analyzing domain names.</h3>
+        <h3>The service loads a custom dictionary providing the most common English words and word pairs, each rated by occurrence frequency. Many gigabytes of written text were analyzed from fiction and non-fiction books, articles, and other sources in the public domain.</h3>
+        <h3>This was originally written in C# and was ported to Python as a learning exercise.  For comparison, the original version performed about 5x faster, loaded a dictionary 10x in size (for more accurate results), and handled concurrent requests much better.</h3>    
+        <h3 style="margin-top: 25px; font-weight: bold;">Usage Examples:</h3>
+        <div style="margin-top: 20px; font-size: 14pt;">
+            <div><a target="_blank" style="font-weight: bold;" href="/wordsplit?input=thisisatest">http://localhost:5000/wordsplit?input=thisisatest</a></div>
+            <div>Returns "this is a test" in JSON format with confidence scoring and other metadata.</div>
+        </div>
+        <div style="margin-top: 20px; font-size: 14pt;">
+            <div><a target="_blank" style="font-weight: bold;" href="/wordsplit?input=somewordstosplit&output=text">http://localhost:5000/wordsplit?input=somewordstosplit&output=text</a></div>
+            <div>Returns "some words to split" in plain text.</div>
+        </div>
+        <div style="margin-top: 20px; font-size: 14pt;">
+            <div><a target="_blank" style="font-weight: bold;" href="/wordsplit?input=firstquery|secondquerytosplit|thirdletsdothisright">http://localhost:5000/wordsplit?input=firstquery|secondquerytosplit|thirdletsdothisright</a></div>
+            <div>Multiple queries can be split at once.</div>
+        </div>
+        <div style="margin-top: 20px; font-size: 14pt;">
+            <div><a target="_blank" style="font-weight: bold;" href="/wordsplit?input=onceuponatimeandstuff&verbosity=1">http://localhost:5000/wordsplit?input=onceuponatimeandstuff&verbosity=1</a></div>
+            <div>Return more metadata with verbosity=1 (Medium).</div>
+        </div>
+        <div style="margin-top: 20px; font-size: 14pt;">
+            <div><a target="_blank" style="font-weight: bold;" href="/wordsplit?input=onceuponatimeandstuff&verbosity=2">http://localhost:5000/wordsplit?input=onceuponatimeandstuff&verbosity=2</a></div>
+            <div>Return even more metadata with verbosity=2 (High).  Shows top 5 passes by confidence score.</div>
+        </div>
+        <div style="margin-top: 20px; font-size: 14pt;">
+            <div><a target="_blank" style="font-weight: bold;" href="/wordsplit?input=toiletseat&verbosity=2">http://localhost:5000/wordsplit?input=toiletseat</a></div>
+            <div>Many queries are hard to split ("toilet seat" or "toilets eat").  The dictionary's word frequency is important, especially for pairs.</div>
+        </div>
+        <div style="margin-top: 20px; font-size: 14pt;">
+            <div><a target="_blank" style="font-weight: bold;" href="/wordsplit?input=thequickbrownfoxjumpsoverthelazydog">http://localhost:5000/wordsplit?input=thequickbrownfoxjumpsoverthelazydog</a></div>
+            <div>Returns "the quick brown fox jumps over the lazy dog".  Longer queries take exponentially longer, with configurable limits on internal passes to prevent overload.</div>
+            <div>Queries are cached for quicker response, with a configurable number of (aprox) max items.</div>
+        </div>
+        <div style="margin-top: 20px; font-size: 14pt;">
+            <div><a target="_blank" style="font-weight: bold;" href="/wordsplit?input=thequickbrownfoxjumpsoverthelazydog&cache=0">http://localhost:5000/wordsplit?input=thequickbrownfoxjumpsoverthelazydog&cache=0</a></div>
+            <div>Disables reading from and writing to the cache, forcing split operation to take place.</div>
+        </div>
+        <div style="margin-top: 20px; font-size: 14pt;">
+            <div><a target="_blank" style="font-weight: bold;" href="/getstats">http://localhost:5000/getstats</a></div>
+            <div>Returns service runtime statistics in JSON format.</div>
+        </div>
+        <div style="margin-top: 20px; font-size: 14pt;">
+            <div><a target="_blank" style="font-weight: bold;" href="/ping">http://localhost:5000/ping</a></div>
+            <div>Returns plain text 'Up', 'Down', or 'LoadingData' to indicate service state.  Can be used for load balancing 'up' test.</div>
+        </div>
+    </body>
+</html>

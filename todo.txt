@@ -1,0 +1,19 @@
+X - Re(Implement) config file.
+X - Re(Implement) word split command.
+X - Implement simple service state class.
+X - Implement split cache class.
+X - Add split cache cleanup.
+X - Re(Implement) or test exhaustive mode.
+X - Add plain text output mode.
+X - Add cache=0 option.
+X - Complete ping command.
+X - Implement service stats class.
+X - Add some stats (load config, load dictionary, split operations, split cache, etc)
+X - Complete getstats command.
+X - Add pytest framework
+X - Add some tests
+- Research expected project structure
+- Create setup.py
+- Add readme
+- Create Dockerfile and package
+- 

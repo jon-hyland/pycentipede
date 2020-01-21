@@ -1,0 +1,50 @@
+Benefits and challenges of continuous integration
+CI is a valuable asset to a software producing organization. CI benefits are not limited to the engineering team but greatly benefit the overall organization. CI enables better transparency and insight into the process of software development and delivery. These benefits enable the rest of the organization to better plan and execute go to market strategies. The following are some of the overall organizational benefits of CI.
+
+Enable scaling
+CI enables organizations to scale in engineering team size, codebase size, and infrastructure. By minimizing code integration bureaucracy and communication overhead, CI enhances agile workflows. It allows each team member to own a new code change set through to release. CI enables scaling by removing any organizational dependencies between development of individual features. Developers can now work on features in an isolated silo and have assurances that their code will seamlessly integrate with the rest of the codebase.
+
+Improve the feedback loop
+Faster feedback on business decisions is another powerful side effect of CI. Product teams can test ideas and iterate product designs faster with an optimized CI platform. Changes can be rapidly pushed and measured for success. Bugs or other issues can be quickly addressed and repaired.
+
+Enhance communication
+Overall engineering communication and accountability is improved with CI. By introducing pull request work flows tied to CI, developers gain passive knowledge share. Pull Requests allow Developers to observe and comment on code from other team members. Developers can now view and collaborate on feature branches with other developers as the features progress through the CI Pipeline. CI can also be used to help QA resource expense. An efficient CI pipeline with high-confidence automated test coverage will safeguard from regressions and ensure that new features match a specification. Before new code is merged it must pass the CI test assertion suite which will prevent any new regressions.
+
+The benefits of CI far outweigh any challenges in adoption. That said, it is important to be aware of the challenges of CI. The real challenges of CI arise when transitioning a project form no CI to CI. Most modern software projects will adopt CI from early inception stages and alleviate the challenges of later adoption.
+
+Adoption and installation
+The challenges of continuous integration are primarily around team adoption and initial technical installation. If a team doesn't currently have a CI solution in place, it can require some effort to pick one and get started. Thus, considerations need to be made around the existing engineering infrastructure when installing a CI pipeline.
+
+Technology learning curve
+CI functionality comes with a list of supportive technologies that may be learning curve investments for the team to undertake. These technologies are version control systems, hosting infrastructure, and orchestration technologies.
+
+CI best practices
+Test Driven Development
+Once a project has established a CI pipeline with automatic test coverage, it is a best practice to constantly develop and improve the test coverage. Each new feature coming down the CI pipeline should have an accompanying set of tests to assert that the new code is behaving as expected.
+
+Test Driven Development (TDD) is the practice of writing out the test code and test cases before doing any actual feature coding. Pure TDD can closely involve the product team to help craft an expected business behavior specification, which can then be transformed into the test cases. In a pure TDD scenario, developers and product team will meet and discuss a spec or list of requirements. This list of requirements will then be converted into a checklist of code assertions. The developers will then write code that matches these assertions.
+
+Pull requests and code review
+Most modern software development teams practice a pull request and code review workflow. Pull requests are a critical practice to effective CI. A pull request is created when a developer is ready to merge new code into the main codebase. The pull request notifies other developers of the new set of changes that are ready for integration.
+
+Pull requests are an opportune time to kick off the CI pipeline and run the set of automated approval steps. An additional, manual approval step is commonly added at pull request time, during which a non-stakeholder engineer performs a code review of the feature.. This allows for a fresh set of eyes to review the new code and functionality. The non-stakeholder will make edit suggestions and approve or deny the pull request.
+
+Pull requests and code review are a powerful tool to foster passive communication and knowledge share among an engineering team. This helps guard against technical debt in the form of knowledge silos, where specific engineers are the only stakeholders for certain features of a code base.
+
+Optimize pipeline speed
+Given that the CI pipeline is going to be a central and frequently used process, it is important to optimize its execution speed. Any small delay in the CI workflow will compound exponentially as the rate of feature releases, team size, and codebase size grows. It is a best practice to measure the CI pipeline speed and optimize as necessary.
+
+A faster CI pipeline enables a faster product feedback loop. Developers can rapidly push changes and experiment with new feature ideas to help improve the user experience. Any bug fixes can be quickly patched and resolved as discovered. This increased execution speed can offer both an advantage over other competitors and an overall higher-quality experience to your customers.
+
+Getting started with continuous integration
+The foundational dependency of CI is a version control system (VCS). If the target code base for a CI install does not have a VCS, step one is installing a VCS. The absence of a VCS should be very unlikely on modern codebases. Some popular VCSs are Git, Mercurial, and Subversion.
+
+Once version control is in place, finding a version control hosting platform is the next move. Most modern version control hosting tools have support and features built in for CI. Some popular version control hosting platforms are Bitbucket, Github, and Gitlab.
+
+After version control has been established on the project, integration approval steps should be added. The most valuable integration approval step to have in place is automated tests. Adding automated tests to a project can have an initial cost overhead. A testing framework has to be installed, then test code and test cases must be written by developers.
+
+Some ideas for other, less expensive CI approval mechanisms to add are syntax checkers, code style formatters, or dependency vulnerability scans. Once you have a version control system setup with some merge approval steps in place, you’ve established continuous integration!
+
+CI is not purely an engineering specific business process. The rest of the organization, marketing, sales, and product teams will also benefit from a CI pipeline. Product teams will need to think how to parallelize execution of simultaneous streams of development. Product and engineering will work closely to determine the qualifying business functionality expectations that will make up the automated test suite.
+
+Marketing and sales will be able to reference the CI pipeline to coordinate with customer facing communications efforts and events. CI gives a level of transparency to the rest of the organization on how engineering execution is progressing. This transparency and communication utility integrates gracefully with an agile project development workflow.

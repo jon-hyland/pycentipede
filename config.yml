@@ -1,0 +1,15 @@
+service:
+  instance_name: pycentipede
+  dev_listen_port: 5000
+
+splitter:
+  data_file: ./dictionary.txt
+  default:
+    max_input_chars: 100
+    max_terms: 25
+    max_passes: 10000
+  exhaustive:
+    max_input_chars: 250
+    max_terms: 50
+    max_passes: 25000
+  max_cache_items: 100000
