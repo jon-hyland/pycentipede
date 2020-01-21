@@ -18,14 +18,14 @@ from splitter.split_result import SplitResult
 
 class Splitter():
     
-    def __init__(self, dictionary: Dictionary, cache: SplitCache, service_stats: Optional[ServiceStats]) -> None:
+    def __init__(self, dictionary: Dictionary, cache: SplitCache, service_stats: Optional[ServiceStats] = None) -> None:
         """Class constructor."""
         self.__break_chars = [" ", "-", "_", ".", "!", "?", "@", "$", "&", "*", ",", "[", "]", "(", ")", "{", "}", ";", ":", "%", "^", "~"]
         self.__dictionary = dictionary
         self.__cache = cache
         self.__service_stats = service_stats
 
-    def simple_split(self, input_: str, cache: bool, max_terms: int, max_passes: int, errors: List[Exception]) -> SplitResult:
+    def simple_split(self, input_: str, cache: bool = True, max_terms: int = 25, max_passes: int = 10000, errors: Optional[List[Exception]] = None) -> SplitResult:
         """Returns only the best split recommendation, using the default set of parameters."""
         try:
             # normalize input
@@ -45,11 +45,14 @@ class Splitter():
             return result
 
         except Exception as ex:
-            errors.append(ex)
+            if errors:
+                errors.append(ex)
+            else:
+                raise
             error_handler.log_error(ex)
 
 
-    def full_split(self, input_: str, cache: bool, pass_display: int, max_terms: int, max_passes: int, errors: List[Exception]) -> SplitResult:
+    def full_split(self, input_: str, cache: bool = True, pass_display: int = 1, max_terms: int = 25, max_passes: int = 10000, errors: Optional[List[Exception]] = None) -> SplitResult:
         """Split the text using a single method and dictionary.  Will usually produce multiple passes (results).  Adds output to the cache."""
         sw = Stopwatch()
         try:
@@ -77,7 +80,10 @@ class Splitter():
             return result
 
         except Exception as ex:
-            errors.append(ex)
+            if errors:
+                errors.append(ex)
+            else:
+                raise
             error_handler.log_error(ex)
 
         finally:

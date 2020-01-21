@@ -29,6 +29,11 @@ class Pass:
         return self.__input
 
     @property
+    def output(self) -> str:
+        """Prints all splits, separated by a space, as a single string."""
+        return self.__generate_output()
+
+    @property
     def splits(self) -> List[Split]:
         """List of Split objects that make up the pass."""
         return self.__splits
@@ -40,10 +45,10 @@ class Pass:
     def display_text(self) -> str:
         """Prints all splits, separated by a space, as a single string."""
         if self.__display_text is None:
-            self.__display_text = self.__generate_display_text()
+            self.__display_text = self.__generate_output()
         return self.__display_text
 
-    def __generate_display_text(self) -> str:
+    def __generate_output(self) -> str:
         """Regenerates value."""
         text = ""
         for s in self.__splits:
@@ -150,7 +155,7 @@ class Pass:
 
     def generate_stored_values(self) -> None:
         """Regenerates the stored and cached values.  Values are cached for performance, but must be regenerated anytime the contents of a pass change."""
-        self.__display_text = self.__generate_display_text()
+        self.__display_text = self.__generate_output()
         self.__unique_string = self.__generate_unique_string()
 
     def clone(self) -> 'Pass':
