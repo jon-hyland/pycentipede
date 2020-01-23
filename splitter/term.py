@@ -1,3 +1,7 @@
+"""PyCentipede - A Python-based word splitter
+Copyright (C) 2019-2020  John Hyland
+GNU GENERAL PUBLIC LICENSE Version 3"""
+
 from typing import List, Set
 from splitter.scoring import get_word_value
 from splitter.enums import DictionarySource

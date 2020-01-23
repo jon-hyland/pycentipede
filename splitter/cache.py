@@ -1,3 +1,7 @@
+"""PyCentipede - A Python-based word splitter
+Copyright (C) 2019-2020  John Hyland
+GNU GENERAL PUBLIC LICENSE Version 3"""
+
 from typing import Optional, Dict
 from threading import Lock
 from utils.simple_timer import SimpleTimer

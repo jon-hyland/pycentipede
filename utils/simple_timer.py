@@ -1,3 +1,7 @@
+"""PyCentipede - A Python-based word splitter
+Copyright (C) 2019-2020  John Hyland
+GNU GENERAL PUBLIC LICENSE Version 3"""
+
 from threading import Thread, Event
 from typing import Callable
 from datetime import datetime, timedelta

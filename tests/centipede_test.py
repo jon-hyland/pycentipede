@@ -1,18 +1,26 @@
+"""PyCentipede - A Python-based word splitter
+Copyright (C) 2019-2020  John Hyland
+GNU GENERAL PUBLIC LICENSE Version 3"""
+
 import re
 import random
 from typing import List
 from time import sleep
-from service import word_splitter
+from splitter.dictionary import Dictionary
+from splitter.word_splitter import Splitter
+from splitter.cache import SplitCache
 from splitter.split_result import SplitResult
-from splitter.split_cache import SplitCache
 
 
 __words: List[List[str]] = []
+__dictionary: Dictionary = Dictionary()
+__cache: SplitCache = SplitCache(max_cache_items=1000, cleanup_secs=60.0)
+__splitter: Splitter = Splitter(dictionary=__dictionary, cache=__cache)
 
 
 def initialize():
     load_words()
-    di.dictionary.load_data(config.data_file)
+    __dictionary.load_data("dictionary.txt")
 
 
 def load_words():
@@ -75,7 +83,7 @@ def test_cache_accuracy(total_iterations=10000, target_success_percent=100.0):
             continue
 
         # store in cache
-        cache.set_item(key, SplitResult(key, value))
+        cache.set_item(key, SplitResult(key, value, 0.0, 0, [], 0, [], 0, True))
         cheat[key] = value
 
         # fetch from cache
@@ -135,7 +143,7 @@ def test_cache_cleanup():
         key = value.replace(" ", "")
 
         # store in cache
-        cache.set_item(key, SplitResult(key, value))
+        cache.set_item(key, SplitResult(key, value, 0.0, 0, [], 0, [], 0, True))
     
     # sleep, allow cleanup to occur
     sleep(6)   
@@ -154,8 +162,8 @@ def test_split_accuracy(total_iterations=1000, target_success_percent=85.0):
     print("\nTesting word splitter accuracy..")
     
     # vars
-    max_terms = config.default_max_terms
-    max_passes = config.default_max_passes
+    max_terms = 25
+    max_passes = 10000
     total_operations = 0
     correct_operations = 0
     
@@ -190,7 +198,7 @@ def test_split_accuracy(total_iterations=1000, target_success_percent=85.0):
         
         # run split command
         errors = []
-        result = word_splitter.full_split(input_, False, 1, max_terms, max_passes, errors)
+        result = __splitter.full_split(input_, False, 1, max_terms, max_passes, errors)
 
         # evaluate response
         output = result.output or ""

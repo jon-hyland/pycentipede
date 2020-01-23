@@ -1,3 +1,7 @@
+"""PyCentipede - A Python-based word splitter
+Copyright (C) 2019-2020  John Hyland
+GNU GENERAL PUBLIC LICENSE Version 3"""
+
 from flask import render_template, request, Response
 from utils import error_handler
 from utils.extensions import remove

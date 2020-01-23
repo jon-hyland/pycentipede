@@ -1,3 +1,7 @@
+"""PyCentipede - A Python-based word splitter
+Copyright (C) 2019-2020  John Hyland
+GNU GENERAL PUBLIC LICENSE Version 3"""
+
 from service import config
 from utils.service_state import ServiceState
 from utils.service_stats import ServiceStats

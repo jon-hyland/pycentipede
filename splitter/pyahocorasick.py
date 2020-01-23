@@ -1,4 +1,6 @@
-# This was pulled from somewhere, don't remember where (stack-exchange?), to replace a C# library in the original version.
+"""PyCentipede - A Python-based word splitter
+Copyright (C) 2019-2020  John Hyland
+GNU GENERAL PUBLIC LICENSE Version 3"""
 
 from typing import List
 from collections import deque

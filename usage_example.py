@@ -1,10 +1,14 @@
+"""PyCentipede - A Python-based word splitter
+Copyright (C) 2019-2020  John Hyland
+GNU GENERAL PUBLIC LICENSE Version 3"""
+
 from splitter.dictionary import Dictionary
 from splitter.cache import SplitCache
 from splitter.word_splitter import Splitter
 
 
 """This example shows how to use the word splitting package outside of
-the included Flask HTTP application, ie, to use as an internal component 
+the included Flask HTTP application, i.e., to use as an internal component 
 of another program."""
 
 
