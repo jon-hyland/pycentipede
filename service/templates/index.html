@@ -1,12 +1,11 @@
 <html>
     <head>
-        <title>Centipede - A Python word splitter</title>
+        <title>PyCentipede - A Python word splitter</title>
     </head>
     <body>
-        <h1>Welcome to Centipede, a Python-based word splitting service.</h1>
-        <h3>Centipede splits strings of contiguous characters into separate words. It was originally used for analyzing domain names.</h3>
+        <h1>Welcome to PyCentipede, a Python-based word splitting service.</h1>
+        <h3>PyCentipede splits strings of contiguous characters into separate words. It was originally used for analyzing domain names.</h3>
         <h3>The service loads a custom dictionary providing the most common English words and word pairs, each rated by occurrence frequency. Many gigabytes of written text were analyzed from fiction and non-fiction books, articles, and other sources in the public domain.</h3>
-        <h3>This was originally written in C# and was ported to Python as a learning exercise.  For comparison, the original version performed about 5x faster, loaded a dictionary 10x in size (for more accurate results), and handled concurrent requests much better.</h3>    
         <h3 style="margin-top: 25px; font-weight: bold;">Usage Examples:</h3>
         <div style="margin-top: 20px; font-size: 14pt;">
             <div><a target="_blank" style="font-weight: bold;" href="/wordsplit?input=thisisatest">http://localhost:5000/wordsplit?input=thisisatest</a></div>
@@ -48,6 +47,12 @@
         <div style="margin-top: 20px; font-size: 14pt;">
             <div><a target="_blank" style="font-weight: bold;" href="/ping">http://localhost:5000/ping</a></div>
             <div>Returns plain text 'Up', 'Down', or 'LoadingData' to indicate service state.  Can be used for load balancing 'up' test.</div>
+        </div>
+        <div style="margin-top: 50px; font-size: 12pt; align-content: center;">
+            <div>
+                PyCentipede - Copyright (C) 2019-2020  John Hyland<br />
+                This program comes with ABSOLUTELY NO WARRANTY.  This is free software, and you are welcome to redistribute it under certain conditions; see: <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3</a>
+            </div>
         </div>
     </body>
 </html>
