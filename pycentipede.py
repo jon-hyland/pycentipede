@@ -13,7 +13,7 @@ from service import routes
 with open("version") as f:
     version = f.read().strip()
 config.version = version
-print(f" * Starting Centipede v{version}")
+print(f" * Starting PyCentipede v{version}")
 
 
 def http_server_thread():

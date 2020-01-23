@@ -1,4 +1,4 @@
-include centipede.py
+include pycentipede.py
 include dictionary.txt
 include config.yml
 include .flaskenv
