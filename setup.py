@@ -17,11 +17,18 @@ setup(
     zip_safe=False,
     install_requires=requirements,
     package_data={
-        "": ["*.txt", "*.yaml", "*.html"],
-        "service": ["*.txt", "*.html"]
+        "": ["*.py", "*.txt", "*.yaml", "*.html"],
+        "service": ["*.py", "*.html"],
+        "splitter": ["*.py"],
+        "tests": ["*.py", "*.txt"],
+        "utils": ["*.py"]
     },
     author="John Hyland",
     author_email="jonhyland@hotmail.com",
-    description="A Flask-based word splitting service.",
-    keywords="word split splitting splitter text separation"
+    description="A Python-based word splitter, wrapped in a Flask HTTP service.",
+    keywords="word split splitting splitter text separation",
+    license='GNU',
+    project_urls={
+        "Source Code": "https://github.com/jon-hyland/pycentipede/"
+    }
 )
