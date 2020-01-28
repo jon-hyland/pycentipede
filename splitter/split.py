@@ -85,14 +85,6 @@ class Split:
         split = Split(self.__text, self.__frequency, self.__multiplier, self.__matched, sources)
         return split
 
-    # def to_split(self) -> Split:
-    #     """Returns a Split() copy of a Term()."""
-    #     sources = set()
-    #     for source in self.sources:
-    #         sources.add(source)
-    #     split = Split(self.full, self.frequency, self.multiplier, True, sources)
-    #     return split
-
     @classmethod
     def from_term(cls, term: Term) -> 'Split':
         """Creates a Split object from a Term."""

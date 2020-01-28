@@ -12,8 +12,8 @@ X - Add some stats (load config, load dictionary, split operations, split cache,
 X - Complete getstats command.
 X - Add pytest framework
 X - Add some tests
-- Research expected project structure
-- Create setup.py
-- Add readme
+X - Ensure expected project structure
+X - Create setup.py
+X - Add README.rst
 - Create Dockerfile and package
 - 

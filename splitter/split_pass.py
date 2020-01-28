@@ -13,8 +13,8 @@ class Pass:
     """One possible split answer, containing one or more splits (slices of original text).  There will be dozens to
     thousands of passes generated per split operation.  Each pass is scored, and the highest is considered winner."""
 
-    def __init__(self, input_: str = "", splits: List[Split] = None, display_text: str = None,
-                 unique_string: str = None) -> None:
+    def __init__(self, input_: str = "", splits: List[Split] = None, display_text: Optional[str] = None,
+                 unique_string: Optional[str] = None) -> None:
         """Class constructor."""
         self.__input: str = input_
         if splits is None:
@@ -22,8 +22,8 @@ class Pass:
             self.__splits: List[Split] = [Split(s)]
         else:
             self.__splits: List[Split] = splits
-        self.__display_text: str = display_text
-        self.__unique_string: str = unique_string
+        self.__display_text: Optional[str] = display_text
+        self.__unique_string: Optional[str] = unique_string
         self.__value: Optional[float] = None
         self.__score: Optional[float] = None
 

@@ -4,7 +4,7 @@ GNU GENERAL PUBLIC LICENSE Version 3"""
 
 import sys
 import time
-from uuid import UUID, uuid1
+from uuid import UUID, uuid4
 from typing import Optional, List, Dict, Tuple
 from threading import Lock, Thread, Event
 from datetime import datetime, timedelta
@@ -73,6 +73,7 @@ class ServiceStats:
             return task_stats.id
         except Exception as ex:
             error_handler.log_error(ex)
+            return uuid4()
 
     def set_task_iterations(self, id_: UUID, total_iterations: int) -> None:
         """Sets the total number of iterations after a task has been started, when the total 
@@ -286,10 +287,10 @@ class TaskStats:
     """Stores and calculates statistics for a long running service task, like the daily loading 
     of a large data file."""
 
-    def __init__(self, name: str, total_iterations: int = 0, id_: UUID = None, start_time: datetime = None,
+    def __init__(self, name: str, total_iterations: int = 0, id_: Optional[UUID] = None, start_time: datetime = None,
                  end_time: datetime = None, completed_iterations: int = 0, is_complete: bool = False) -> None:
         """Class constructor."""
-        self.__id: UUID = id_ if not None else uuid1()
+        self.__id: UUID = id_ or uuid4()
         self.__name: str = name
         self.__start_time: datetime = start_time or datetime.now()
         self.__end_time: datetime = end_time or datetime(1, 1, 1)

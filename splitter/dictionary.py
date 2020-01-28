@@ -4,6 +4,7 @@ GNU GENERAL PUBLIC LICENSE Version 3"""
 
 from typing import List, Dict, Optional, Tuple
 from threading import Event
+from uuid import uuid4
 from utils.extensions import has_numbers
 from utils.stopwatch import Stopwatch
 from utils.service_stats import ServiceStats
@@ -54,6 +55,7 @@ class Dictionary:
 
     def __estimate_dictionary_size(self, filename: str) -> int:
         """Counts number of lines in file.. binary optimized."""
+        task_id = uuid4()
         if (self.__service_stats):
             task_id =self.__service_stats.begin_task("estimate_dictionary_size")
         try:
@@ -71,6 +73,7 @@ class Dictionary:
 
     def __load_terms(self, filename: str, line_count: int) -> Dict[str, Term]:
         """Loads dictionary terms from prebuilt text file."""
+        task_id = uuid4()
         if (self.__service_stats):
             task_id = self.__service_stats.begin_task("load_dictionary_terms", line_count)
         try:
@@ -103,6 +106,7 @@ class Dictionary:
 
     def __create_collections(self, terms_by_full: Dict[str, Term]) -> Tuple[Dict[str, List[Term]], List[Term], List[Term]]:
         """Creates the necessary collections."""
+        task_id = uuid4()
         if (self.__service_stats):
             task_id = self.__service_stats.begin_task("create_dictionary_collections", len(terms_by_full))
         try:
@@ -116,7 +120,7 @@ class Dictionary:
                     if (count % 1000) == 0:
                         self.__service_stats.update_task(task_id, count, True)
                 if term.compressed not in terms_by_compressed.keys():
-                    terms_by_compressed[term.compressed]: List[Term] = []
+                    terms_by_compressed[term.compressed] = []
                 terms_by_compressed[term.compressed].append(term)
                 terms.append(term)
                 if (DictionarySource.Supplemental in term.sources) and (has_numbers(term.compressed)):
@@ -128,6 +132,7 @@ class Dictionary:
 
     def __build_index(self, terms: List[Term]) -> Trie:
         """Builds search index."""
+        task_id = uuid4()
         if (self.__service_stats):
             task_id = self.__service_stats.begin_task("create_dictionary_collections", len(terms) * 2)
         try:

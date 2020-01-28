@@ -14,8 +14,8 @@ class SplitResult:
                  pass_count: int, passes: List[Pass], elapsed_ms: int, cached: bool):
         """Class constructor."""
         self.__input: str = input_
-        self.__output: str = output
-        self.__score: float = score
+        self.__output: Optional[str] = output
+        self.__score: Optional[float] = score
         self.__term_count: int = term_count
         self.__matched_terms: List[Term] = matched_terms
         self.__pass_count: int = pass_count

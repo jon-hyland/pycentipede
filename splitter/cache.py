@@ -4,6 +4,7 @@ GNU GENERAL PUBLIC LICENSE Version 3"""
 
 from typing import Optional, Dict
 from threading import Lock
+from uuid import UUID, uuid4
 from utils.simple_timer import SimpleTimer
 from utils.stopwatch import Stopwatch
 from utils.json_writer import JsonWriter
@@ -55,6 +56,7 @@ class SplitCache:
         """Fired by timer, removes cached items with lowest hit counts."""
         with self.__lock:
             if len(self.__cache) > self.__max_cache_items:
+                task_id = uuid4()
                 if (self.__service_stats):
                     task_id = self.__service_stats.begin_task(name="", total_iterations=int(len(self.__cache) - self.__max_cache_items * 0.9))
                 try:

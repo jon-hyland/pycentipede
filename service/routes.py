@@ -5,10 +5,7 @@ GNU GENERAL PUBLIC LICENSE Version 3"""
 from flask import render_template, request, Response
 from utils import error_handler
 from utils.extensions import remove
-from utils.service_state import ServiceState
-from utils.service_stats import ServiceStats
 from utils.stopwatch import Stopwatch
-from splitter.word_splitter import Splitter
 from service.command_writer import VerbosityLevel
 from service import command_writer
 from service import config

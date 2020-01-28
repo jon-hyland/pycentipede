@@ -54,6 +54,7 @@ class Splitter():
             else:
                 raise
             error_handler.log_error(ex)
+            return SplitResult(input_, "", 0.0, 0, [], 0, [], 0, False)
 
 
     def full_split(self, input_: str, cache: bool = True, pass_display: int = 1, max_terms: int = 25, max_passes: int = 10000, errors: Optional[List[Exception]] = None) -> SplitResult:
@@ -89,6 +90,7 @@ class Splitter():
             else:
                 raise
             error_handler.log_error(ex)
+            return SplitResult(input_, "", 0.0, 0, [], 0, [], 0, False)
 
         finally:
             if self.__service_stats:
