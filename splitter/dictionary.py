@@ -22,7 +22,7 @@ class Dictionary:
         self.__terms: List[Term] = []
         self.__terms_by_compressed: Dict[str, List[Term]] = {}
         self.__special_numbers: List[Term] = []
-        self.__word_search: Optional[Trie] = None
+        self.__word_search: Trie = Trie()
         self.__signal: Event = Event()
 
     def load_data(self, filename: str) -> None:
@@ -42,13 +42,12 @@ class Dictionary:
 
         # build search index
         print(" * Building aho-corasick index..")
-        word_search = self.__build_index(terms)
+        self.__build_index(terms)
 
-        # store globals
+        # store
         self.__terms = terms
         self.__terms_by_compressed = terms_by_compressed
         self.__special_numbers = special_numbers
-        self.__word_search = word_search
         
         # set signal
         self.__signal.set()
@@ -130,22 +129,20 @@ class Dictionary:
             if (self.__service_stats):
                 self.__service_stats.end_task(task_id)
 
-    def __build_index(self, terms: List[Term]) -> Trie:
+    def __build_index(self, terms: List[Term]) -> None:
         """Builds search index."""
         task_id = uuid4()
         if (self.__service_stats):
             task_id = self.__service_stats.begin_task("create_dictionary_collections", len(terms) * 2)
         try:
-            word_search = Trie()
             count = 0
             for term in terms:
                 if (self.__service_stats):
                     count += 1
                     if (count % 1000) == 0:
                         self.__service_stats.update_task(task_id, count, True)
-                word_search.add_word(term.compressed, term.compressed)
-            word_search.make_automaton()
-            return word_search
+                self.__word_search.add_word(term.compressed, term.compressed)
+            self.__word_search.make_automaton()
         finally:
             if (self.__service_stats):
                 self.__service_stats.end_task(task_id)

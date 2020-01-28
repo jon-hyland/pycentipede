@@ -20,8 +20,8 @@ class Term:
             self.__compressed: str = text.replace(" ", "")
             self.__words: List[str] = text.split(" ")
         else:
-            self.__compressed: str = text
-            self.__words: List[str] = [text]
+            self.__compressed = text
+            self.__words = [text]
         self.__frequency: float = frequency
         self.__multiplier: float = multiplier
         self.__sources: Set[DictionarySource] = sources

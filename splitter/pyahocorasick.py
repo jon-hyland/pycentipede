@@ -2,6 +2,8 @@
 Copyright (C) 2019-2020  John Hyland
 GNU GENERAL PUBLIC LICENSE Version 3"""
 
+# mypy: ignore-errors
+
 from typing import List
 from collections import deque
 
@@ -153,7 +155,7 @@ class Trie(object):
                 yield index, output
 
     def find_all(self, string: str) -> List[str]:
-        words = []
+        words: List[str] = []
         for item_tuple in self.iter(string):
             for word in item_tuple[1]:
                 words.append(word)

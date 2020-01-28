@@ -11,6 +11,9 @@ from splitter.word_splitter import Splitter
 the included Flask HTTP application, i.e., to use as an internal component 
 of another program."""
 
+__dictionary: Dictionary
+__cache: SplitCache
+__splitter: Splitter
 
 def initialize():
     global __dictionary

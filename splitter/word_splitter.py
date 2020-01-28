@@ -191,8 +191,8 @@ class Splitter():
         passes.sort(key=lambda x: x.score(), reverse=True)
 
         # remove duplicates
-        passes_copy = []
-        unique = set()
+        passes_copy: List[Pass] = []
+        unique: Set[str] = set()
         for p in passes:
             if p.display_text() not in unique:
                 unique.add(p.display_text())
@@ -295,9 +295,9 @@ class Splitter():
                 if not segment:
                     continue
                 if numeric_segment:
-                    term = self.__dictionary.find_term(segment)
-                    if term is not None:
-                        split = Split.from_term(term)
+                    term_ = self.__dictionary.find_term(segment)
+                    if term_ is not None:
+                        split = Split.from_term(term_)
                         splits.append(split)
                     else:
                         splits.append(Split(segment, 1E-8, 1.0, True, set()))

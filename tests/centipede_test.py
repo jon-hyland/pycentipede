@@ -4,7 +4,7 @@ GNU GENERAL PUBLIC LICENSE Version 3"""
 
 import re
 import random
-from typing import List
+from typing import List, Dict
 from time import sleep
 from splitter.dictionary import Dictionary
 from splitter.word_splitter import Splitter
@@ -53,7 +53,7 @@ def test_cache_accuracy(total_iterations=10000, target_success_percent=100.0):
     
     # vars
     cache = SplitCache(max_cache_items=10000)
-    cheat = {}
+    cheat: Dict[str, str] = {}
     total_operations = 0
     correct_operations = 0
 
@@ -197,7 +197,7 @@ def test_split_accuracy(total_iterations=1000, target_success_percent=85.0):
         print(f" Orig : {correct_answer}")
         
         # run split command
-        errors = []
+        errors: List[Exception] = []
         result = __splitter.full_split(input_, False, 1, max_terms, max_passes, errors)
 
         # evaluate response

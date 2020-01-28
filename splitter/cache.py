@@ -47,7 +47,7 @@ class SplitCache:
             if input_ in self.__cache:
                 self.__hits += 1
                 self.__cache[input_].increment_hits()
-                return self.__cache.get(input_).result
+                return self.__cache[input_].result
             else:
                 self.__misses += 1
                 return None

@@ -21,7 +21,7 @@ class Pass:
             s = input_.lower().strip()
             self.__splits: List[Split] = [Split(s)]
         else:
-            self.__splits: List[Split] = splits
+            self.__splits = splits
         self.__display_text: Optional[str] = display_text
         self.__unique_string: Optional[str] = unique_string
         self.__value: Optional[float] = None

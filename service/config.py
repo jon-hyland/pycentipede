@@ -34,7 +34,7 @@ def load_settings():
     f = open("config.yml")
     settings = yaml.safe_load(f)
     f.close()
-    instance_name = settings["service"]["instance_name"]
+    instance_name = settings['service']['instance_name']
     dev_listen_port = settings["service"]["dev_listen_port"]
     data_file = settings["splitter"]["data_file"]
     default_max_input_chars = settings["splitter"]["default"]["max_input_chars"]

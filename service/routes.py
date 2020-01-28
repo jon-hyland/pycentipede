@@ -2,6 +2,7 @@
 Copyright (C) 2019-2020  John Hyland
 GNU GENERAL PUBLIC LICENSE Version 3"""
 
+from typing import List
 from flask import render_template, request, Response
 from utils import error_handler
 from utils.extensions import remove
@@ -62,12 +63,12 @@ def get_stats() -> Response:
 @app.route("/wordsplit")
 def word_split() -> Response:
     """Performs word split operation, returns JSON response with metadata OR plain text."""
-    errors = []
+    errors: List[Exception] = []
     output = "json"
     sw = Stopwatch()
     try:
         # parse params
-        inputs = (request.args.get("input") or "").replace("|", ",").split(",")
+        inputs: List[str] = (request.args.get("input") or "").replace("|", ",").split(",")
         pass_display = int(request.args.get("passdisplay") or "5")
         exhaustive = (request.args.get("exhaustive") or "0") == "1"
         verbosity = VerbosityLevel(int(request.args.get("verbosity") or "0"))
@@ -93,11 +94,11 @@ def word_split() -> Response:
 
         # perform splits
         results = []
-        for i in inputs:
+        for s in inputs:
             if (verbosity < VerbosityLevel.High) and (not exhaustive):
-                result = di.word_splitter.simple_split(i, cache, max_terms, max_passes, errors)
+                result = di.word_splitter.simple_split(s, cache, max_terms, max_passes, errors)
             else:
-                result = di.word_splitter.full_split(i, cache, pass_display, max_terms, max_passes, errors)
+                result = di.word_splitter.full_split(s, cache, pass_display, max_terms, max_passes, errors)
             results.append(result)
         
         # write response
